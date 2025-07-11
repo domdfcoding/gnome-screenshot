@@ -171,3 +171,24 @@ screenshot_config_parse_command_line (gboolean clipboard_arg,
 
   return TRUE;
 }
+
+gboolean
+in_desktop (const gchar *name)
+{
+  const gchar *desktop_name_list;
+  gchar **names;
+  gboolean in_list = FALSE;
+  gint i;
+
+  desktop_name_list = g_getenv ("XDG_CURRENT_DESKTOP");
+  if (!desktop_name_list)
+    return FALSE;
+
+  names = g_strsplit (desktop_name_list, ":", -1);
+  for (i = 0; names[i] && !in_list; i++)
+    if (strcmp (names[i], name) == 0)
+      in_list = TRUE;
+  g_strfreev (names);
+
+  return in_list;
+}
