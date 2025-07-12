@@ -20,6 +20,7 @@
 #pragma once
 
 #include <glib-object.h>
+#include "config.h"
 #include "screenshot-backend.h"
 
 G_BEGIN_DECLS
@@ -31,3 +32,10 @@ G_DECLARE_FINAL_TYPE (ScreenshotBackendX11, screenshot_backend_x11, SCREENSHOT, 
 ScreenshotBackend *screenshot_backend_x11_new (void);
 
 G_END_DECLS
+
+#ifdef HAVE_X11
+// Necessary for taking screenshots from shell (or PrtScr) in Unity
+GdkPixbuf *
+screenshot_backend_x11_get_pixbuf (ScreenshotBackend *backend,
+                                   GdkRectangle      *rectangle);
+#endif

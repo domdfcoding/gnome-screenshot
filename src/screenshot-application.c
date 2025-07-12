@@ -131,7 +131,7 @@ static void
 save_pixbuf_handle_error (ScreenshotApplication *self,
                           GError *error)
 {
-  if (screenshot_config->interactive)
+  if (in_desktop ("Unity") || screenshot_config->interactive)
     {
       ScreenshotDialog *dialog = self->dialog;
 
@@ -435,7 +435,7 @@ build_filename_ready_cb (GObject *source,
       return;
     }
 
-  if (screenshot_config->interactive)
+  if (in_desktop ("Unity") || screenshot_config->interactive)
     {
       self->dialog = screenshot_dialog_new (GTK_APPLICATION (self),
                                             self->screenshot,

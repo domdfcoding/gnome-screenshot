@@ -343,7 +343,7 @@ screenshot_fallback_find_current_window (void)
   return window;
 }
 
-static GdkPixbuf *
+GdkPixbuf *
 screenshot_backend_x11_get_pixbuf (ScreenshotBackend *backend,
                                    GdkRectangle      *rectangle)
 {
