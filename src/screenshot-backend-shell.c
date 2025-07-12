@@ -22,6 +22,7 @@
 #include "config.h"
 
 #include "screenshot-backend-shell.h"
+#include "screenshot-backend-x11.h"
 
 #include "screenshot-config.h"
 
@@ -81,6 +82,9 @@ screenshot_backend_shell_get_pixbuf (ScreenshotBackend *backend,
                                      filename);
     }
 
+  if (in_desktop ("Unity"))
+      screenshot = screenshot_backend_x11_get_pixbuf(backend, rectangle);
+  else {
   connection = g_application_get_dbus_connection (g_application_get_default ());
   g_dbus_connection_call_sync (connection,
                                "org.gnome.Shell.Screenshot",
@@ -100,6 +104,7 @@ screenshot_backend_shell_get_pixbuf (ScreenshotBackend *backend,
 
       /* remove the temporary file created by the shell */
       g_unlink (filename);
+      }
     }
 
   return screenshot;
